@@ -68,7 +68,7 @@
       if sub.get('filters') and sub.get('realFilters')
         query.$and = [
           sub.get("filters"),
-          sub.get("realFilters") or {}
+          sub.get("realFilters")
         ]
       else if sub.get('filters')
         query = sub.get('filters')
