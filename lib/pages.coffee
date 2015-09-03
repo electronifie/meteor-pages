@@ -69,7 +69,7 @@
 
       r = @auth?.call @, 0, sub
 
-      if not r then return 0
+      if @auth and not r then return 0
 
       n = sub.get "nPublishedPages"
       return n  if n?
