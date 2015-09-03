@@ -66,6 +66,11 @@
     #   ).count() / (sub.get "perPage")
     #   n or 1
     "CountPages": (sub) ->
+
+      r = @auth?.call @, 0, sub
+
+      if not r then return 0
+
       n = sub.get "nPublishedPages"
       return n  if n?
 
