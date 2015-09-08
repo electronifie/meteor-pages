@@ -1,7 +1,7 @@
 Package.describe({
   "name": "electronifie:pages",
   "summary": "State of the art, out of the box Meteor pagination",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "git": "https://github.com/electronifie/meteor-pages"
 });
 

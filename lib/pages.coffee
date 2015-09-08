@@ -76,7 +76,9 @@
 
       query = {}
 
-      if sub.get('filters') and sub.get('realFilters')
+      if _.isArray(r) and r.length is 2 and not _.isFunction r[0].fetch
+        query = r[0]
+      else if sub.get('filters') and sub.get('realFilters')
         query.$and = [
           sub.get("filters"),
           sub.get("realFilters")
