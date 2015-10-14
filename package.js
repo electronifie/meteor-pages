@@ -1,12 +1,12 @@
 Package.describe({
-  "name": "electronifie:pages",
+  "name": "electronifiejs:pages",
   "summary": "State of the art, out of the box Meteor pagination",
   "version": "1.8.5",
   "git": "https://github.com/electronifie/meteor-pages"
 });
 
 Package.onUse(function(api){
-    api.versionsFrom("METEOR@1.0.3.1")
+    api.versionsFrom("METEOR@1.2")
     api.use([
         "meteor-platform",
         "check",
@@ -42,11 +42,11 @@ Package.onUse(function(api){
 
 Package.onTest(function(api){
     api.use([
-        "electronifie:pages"
+        "electronifiejs:pages"
     ]);
 
-    api.addFiles([
+    api.addAssets([
         "tests/test_templates.html",
         "tests/tests.coffee"
-    ]);
+    ], 'client');
 });
