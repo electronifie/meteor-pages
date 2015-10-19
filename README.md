@@ -14,12 +14,6 @@ Reactive, multiple collections - [http://pages-multi.meteor.com/](http://pages2.
 
 Infinite scrolling - [http://pages3.meteor.com/](http://pages3.meteor.com/)
 
-
-Live help
----------
-
-Do you need some assistance with Meteor development? [I'm happy to help.](https://www.codementor.io/alethes)
-
 Features
 --------
 
@@ -49,11 +43,11 @@ Meteorite:
 
 Basic usage
 -----------
-JavaScript/CoffeeScript (in common code, running on both the server and the client):
+JavaScript/CoffeScript (in common code, running on both the server and the client):
 
-```js
-this.Pages = new Meteor.Pagination("collection-name");
-```
+`
+Pages = new Meteor.Pagination("collection-name")
+`
 
 and HTML:
 ```html
@@ -68,14 +62,6 @@ and HTML:
 
 Of course, you can use any variable to store the object returned by `new Meteor.Pagination()`, not necessarily `Pages`.
 
-As for the customizations, there's a multitude of options. You'll most likely want to define your own template for the paginated items. When you do, you can pass it's name to the `Meteor.Pagination` constructor:
-
-```js
-this.Pages = new Meteor.Pagination("collection-name", {
-  itemTemplate: "myItemTemplate"
-})
-```
-
 Settings
 --------
 Settings can be passed as a second argument to `Meteor.Pagination()`. Many of them can be changed on the client-side, causing an immediate redraw. Unless stated otherwise, user-defined functions are called in the context of the *Pagination* object.
@@ -84,36 +70,26 @@ There are two ways to modify settings:
 
 1. In common code, during declaration (client and server):
 
-```js
-this.Pages = new Meteor.Pagination("collection-name", {
-  perPage: 20,
-  sort: {
-    title: 1
-  },
-  filters: {
-    count: {
-      $gt: 10
-    }
-  },
-  availableSettings: {
-    perPage: true,
-    sort: true
-  }
-});
+```CoffeeScript:
+@Pages = new Meteor.Pagination "collection-name",
+    perPage: 20
+    sort: 
+        title: 1
+    filters: 
+        count: 
+            $gt: 10
 ```
 2. Client-side code / common code (client and server), after declaration:
 
-```js
-Pages.set({
-  perPage: 10,
-  sort: {
+```CoffeeScript:
+Pages.set
+  perPage: 10
+  sort:
     title: -1
-  }
-});
 ```
 
 Available to the client:
-+ **dataMargin (*Number*, default = 3)** - determines how many neighboring pages on each side should be prefetched for seamless transition after loading the current page. Prefetching stops when the subscription limit (imposed by **maxSubscriptions**) is reached.
++ **dataMargin (*Number*, default = 3)** - determines how many neighboring pages on each side should be prefetched for seamless transition after loading the current page.
 + **filters (*Object*, default = {})** - MongoDB find query object, eg. `{name: {$lt: 5}}`
 + **itemTemplate (*String*, default = "paginateItemDefault")** - name of the template to use for items. The default template simply lists all attributes of an item
 + **navShowEdges (*Boolean*, default = false)** - whether to show the links to the edge pages («) in the navigation panel. If true, overrides *navShowFirst* and *navShowLast*.
@@ -159,12 +135,9 @@ Unavailable to the client:
 + **infiniteItemsLimit (*Number*, default = Infinity)** - the maximum number of items to display at once in infinite scrolling mode. If the number (n) is less then Infinity only the last n items are displayed on the page.
 + **infiniteRateLimit (*Number*, default = 1)** - determines the minimum interval (in seconds) between subsequent page changes in infinite scrolling mode
 + **infiniteTrigger (*Number*, default = .8)** - if infinite scrolling is used, determines how far (for val > 1: in pixels, for 0 > val >= 1: in (1 - percent)) from the bottom of the page should the new data portion be requested
-+ **initPage (*Number*, default = 1)** - number of the initially displayed page
-+ **maxSubscriptions (*Number*, default = 100)** - the maximum number of simultaneously active subscriptions per client. Normally, open pages and,if **dataMargin** is greater than one, their neighbors are cached on the client-side for seamless transitions. To achieve this, multiple subscriptions (each keeping track of a single page) are held open at the same time. This prevents clients from requesting the same page several times as the user navigates back and forth within the paginated set. This lowers the amount of data sent over the wire and decreases server load for mostly static data. However, each addition to, or removal from the set (along with some of the modifications) trigger a cascade of changes in the active subscriptions. In addition, a very high number of simultaneous subscriptions may overload the memory on both the server and the client side. To prevent that, a `Pagination` instance can keep track of the number of active subscriptions and securely limit them behind the scenes. Each `Pagination` instance has a separate subscription limit.
 + **navTemplate (*String*, default = "_pagesNav")** - name of the template used for displaying the pagination navigation
 + **onDeniedSetting (*Function*, logs "Changing {{setting}} not allowed." to console by default)** - called when the setting is unavailable to the client (based on the rules defined in #availableSettings() or lack thereof).
 + **pageTemplate (*String*, default = "_pagesPage")** - name of the template used for displaying a page of items
-+ **pageCountFrequency (*Number*, default = 10)** - determines the number of seconds between the client's subsequent requests for an up-to-date total page count. Shouldn't be less than 1.
 + **pageSizeLimit (*Number*, default = 60)** - limits the maximum number of items displayed per page
 + **rateLimit (*Number*, default = 1)** - determines the minimum interval (in seconds) between subsequent page changes
 + **routeSettings (*Function*, default = undefined)** - an optional function which, when *iron-router* is enabled, is called (in the context of the *Pagination* object) from *onBeforeAction* with the route object (`this` in *onBeforeAction*) as an argument. It enables modifying pagination settings (eg. filters) based on the route's parameters (see *iron-router* example, view 3).
@@ -180,9 +153,7 @@ Examples
 
 Currently, the following examples are available in the */examples* directory:
 
-+ *basic* - the most straightforward way of using *Pages*. The default item template simply lists the attributes of each item.
-
-+ *changePerPage* - basic usage with two buttons enabling immediate changes to the "perPage" setting
++ *basic* - the most straightforward way of using *Pages*. The default item template simply lists each item's attributes.
 
 + *infinite* - infinite scrolling
 
@@ -195,3 +166,8 @@ Currently, the following examples are available in the */examples* directory:
 Todos
 -----
 + Tests
+
+Support
+-------
+If you find this package useful, please support its development:
+[https://www.gittip.com/alethes/](https://www.gittip.com/alethes/)

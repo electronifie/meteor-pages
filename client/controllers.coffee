@@ -32,6 +32,10 @@ Template._pagesPage.helpers
   ready: ->
     @sess "ready"
   items: ->
+    if @infinite
+      setTimeout =>
+        @blockScrolling = false
+      , 100
     if @init
       @checkInitPage()
     cp = @sess "currentPage"
@@ -40,7 +44,7 @@ Template._pagesPage.helpers
     if 0 is @sess "totalPages"
       @ready true
       return []
-    if @received[cp] or ((@fastRender or @groundDB) and cp is @initPage)
+    if @received[cp] or (@fastRender and cp is @initPage)
       @ready true
       n = cp
     else
@@ -51,10 +55,10 @@ Template._pagesPage.helpers
     p = @getPage n
     return []  unless p?
     for i, k in p
-      p[k]._pages = @
+      p[k]['_t'] = @itemTemplate
     p
   item: ->
-    Template[@_pages.itemTemplate]
+    Template[@_t]
 
 Template._pagesNav.helpers
   show: ->
@@ -68,17 +72,17 @@ Template._pagesNav.helpers
       p = total if p > total
       return self.linkTo p
     "#"
-  navigationNeighbors: ->
-    @navigationNeighbors()
+  paginationNeighbors: ->
+    @paginationNeighbors()
 
 Template._pagesNav.events
-  "click a": (e, tmpl) ->
-    (_.throttle (e, n) ->
-      self = tmpl.data
-      unless self.router is "iron-router"
-        e.preventDefault()
-        self.onNavClick.call self, n
-    , self.rateLimit * 1000)(e, @n)
+  "click a": (e) ->
+      (_.throttle (e, n) ->
+        self = Meteor.Pagination::instances[e.target.parentNode.parentNode.parentNode.getAttribute 'data-pages']
+        unless self.router is "iron-router"
+          e.preventDefault()
+          self.onNavClick.call self, n
+      , self.rateLimit * 1000)(e, @n)
 
 Template._pagesTableItem.helpers
   attrs: (self) ->
@@ -88,5 +92,4 @@ Template._pagesTableItem.helpers
 
 Template._pagesItemDefault.helpers
   properties: ->
-    self = @_pages
-    _.compact _.map @, (v, k) -> if ((self.debug and k isnt "_pages") or k[0] isnt "_") then name: k, value: v else null
+    _.compact _.map @, (v, k) -> if k[0] isnt "_" then name: k, value: v else null
