@@ -39,14 +39,3 @@ Package.onUse(function(api){
         "public/loader.gif"
     ], "client");
 });
-
-Package.onTest(function(api){
-    api.use([
-        "electronifiejs:pages"
-    ]);
-
-    api.addFiles([
-        "tests/test_templates.html",
-        "tests/tests.coffee"
-    ]);
-});
