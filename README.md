@@ -1,9 +1,10 @@
 Meteor Pages
 ============
 
+**NOTE**: This if a fork of [James Daab's meteor-pages](https://github.com/alethes/meteor-pages) with a few performance enhancements.  Please refer to that page for the latest documentation and examples. Examples have been removed from this fork.
+
 State of the art, out of the box Meteor pagination
 --------------------------------------------------
-
 Live demos: 
 
 Basic usage - [http://pages.meteor.com/](http://pages.meteor.com/)
@@ -36,10 +37,7 @@ Features
 Installation
 ------------
 Meteor 0.9+:
-`meteor add alethes:pages`
-
-Meteorite:
-`mrt add pages`
+`meteor add electronifiejs:pages`
 
 Basic usage
 -----------
@@ -148,26 +146,4 @@ Unavailable to the client:
   + **wrapper (*String, Boolean*, default = false)** - a class name of the optional *\<div\>* wrapper. The wrapper is not generated if the argument is left out.
 
 
-Examples
---------
 
-Currently, the following examples are available in the */examples* directory:
-
-+ *basic* - the most straightforward way of using *Pages*. The default item template simply lists each item's attributes.
-
-+ *infinite* - infinite scrolling
-
-+ *iron-router* - a basic example of iron-router integration
-
-+ *multi-collection* - multiple paginations on a single page
-
-+ *table* - a data table, constructed automatically based on the list of fields to display
-
-Todos
------
-+ Tests
-
-Support
--------
-If you find this package useful, please support its development:
-[https://www.gittip.com/alethes/](https://www.gittip.com/alethes/)
